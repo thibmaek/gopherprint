@@ -18,7 +18,7 @@ func getMenuItems() []menuet.MenuItem {
 	items = append(
 		items,
 		menuet.MenuItem{
-			Text: "Open OctoPrint",
+			Text: fmt.Sprintf("Open OctoPrint (%s)", serverURL),
 			Clicked: func() {
 				exec.Command("open", serverURL).Start()
 			},
