@@ -55,7 +55,7 @@ func updateMenubarTitle(client *octoprint.Client) {
 func updateApp(client *octoprint.Client) {
 	for {
 		updateMenubarTitle(client)
-		time.Sleep(time.Second * 5)
+		time.Sleep(time.Second * 1)
 	}
 }
 
