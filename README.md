@@ -12,5 +12,6 @@ $ make build key=<octoprint_api_key> url=<octoprint_url>
 
 ## Libraries
 
-- menuet: [https://github.com/caseymrm/menuet](https://github.com/caseymrm/menuet)
-- go-octoprint: [https://github.com/mcuadros/go-octoprint](https://github.com/mcuadros/go-octoprint)
+- [caseymrm/menuet](https://github.com/caseymrm/menuet)
+- [mcuadros/go-octoprint](https://github.com/mcuadros/go-octoprint)
+- [haklop/gnotifier](https://github.com/haklop/gnotifier)
