@@ -1,2 +1,4 @@
 *.app
 appTemplate/Contents/MacOS
+
+Makefile.vars
