@@ -75,18 +75,21 @@ func getBaseMenuItems() []menuet.MenuItem {
 	return items
 }
 
-func handleUpdatePrinterState(client *octoprint.Client) {
+func handleUpdatePrinterState(client *octoprint.Client) error {
 	req := octoprint.StateRequest{}
 	state, err := req.Do(client)
 	if err != nil {
 		if err.Error() == "Printer is not operational" {
 			menuet.App().SetMenuState(&menuet.MenuState{
-				Title: getDisplayString("Printer not available"),
+				Title: getDisplayString("Printer not operational"),
 			})
-			return
+			return err
 		}
-
-		log.Fatalf("error requesting octoprint state: %s", err)
+		log.Printf("error requesting octoprint state: %s", err)
+		menuet.App().SetMenuState(&menuet.MenuState{
+			Title: getDisplayString(fmt.Sprintf("Failed to connect to host %s", serverURL)),
+		})
+		return err
 	}
 
 	progressStr := ""
@@ -138,11 +141,25 @@ func handleUpdatePrinterState(client *octoprint.Client) {
 	menuet.App().SetMenuState(&menuet.MenuState{
 		Title: menubarValue,
 	})
+
+	return nil
 }
 
 func updateApp(client *octoprint.Client) {
+	connected := false
 	for {
-		handleUpdatePrinterState(client)
+		if !connected {
+			menuet.App().SetMenuState(&menuet.MenuState{
+				Title: getDisplayString("Connecting..."),
+			})
+		}
+
+		err := handleUpdatePrinterState(client)
+		if err != nil {
+			break
+		}
+
+		connected = true
 		time.Sleep(time.Second * 1)
 	}
 }
