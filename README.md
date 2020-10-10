@@ -3,7 +3,7 @@
 
 Simple menubar app to display Octprint status and progress.
 
-![Screenshot of menubar app](./github/images/menubar_screenshot.png)
+![Screenshot of menubar app](./.github/images/menubar_screenshot.png)
 
 ## Table of Contents
 
