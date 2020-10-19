@@ -87,7 +87,7 @@ func handleUpdatePrinterState(client *octoprint.Client) error {
 		}
 		log.Printf("error requesting octoprint state: %s", err)
 		menuet.App().SetMenuState(&menuet.MenuState{
-			Title: getDisplayString(fmt.Sprintf("Failed to connect to host %s", serverURL)),
+			Title: getDisplayString(fmt.Sprintf("Failed to connect to host (retry in 10s) %s", serverURL)),
 		})
 		return err
 	}
@@ -156,11 +156,12 @@ func updateApp(client *octoprint.Client) {
 
 		err := handleUpdatePrinterState(client)
 		if err != nil {
-			break
+			log.Printf("Failed to connect to printer (retry in 10s): %s", err.Error())
+			time.Sleep(time.Second * 10)
+		} else {
+			connected = true
+			time.Sleep(time.Second * 1)
 		}
-
-		connected = true
-		time.Sleep(time.Second * 1)
 	}
 }
 
